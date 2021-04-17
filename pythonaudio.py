@@ -17,35 +17,6 @@ db = myclient["AudioFiles"]
 collection_song = db["Songs"]
 collection_podcast = db["Podcast"]
 collection_audiobook = db["AudioBook"]
-# songs = {
-#     'id': 1,
-#     'song_name': str(""),
-#     'number_of_second': int(0),
-#     'upload_time': datetime.datetime.utcnow()
-# }
-
-# podcast = {
-#     'id': 1,
-#     'podcast_name': '',
-#     'number_of_second': '',
-#     'uploaded_time': datetime.datetime.utcnow(),
-#     'host': '',
-#     'participant': ''
-# }
-
-# audiobook = {
-#     'id': 1,
-#     'audiobook_title': '',
-#     'auther_of_the_title': '',
-#     'narrator': '',
-#     'number_of_second': '',
-#     'uploaded_time': ''
-# }
-
-# record_id = db['Songs'].insert(songs)
-# record_id = db['Podcast'].insert(podcast)
-# record_id = db['AudioBook'].insert(audiobook)
-# # db['AudioBook'].delete_one(audiobook)
 
 
 @app.route('/create/<audioFileType>/', methods=['GET', 'POST'])
@@ -132,8 +103,6 @@ def deleteApi(audioFileType, id):
         else:
             return jsonify("id:"+id+" Does not exist")
     elif int(audioFileType) == 2:
-        audio = {'id': id}
-        print(id, "id")
         result = db['AudioBook'].delete_one({'id': int(id)})
         if result.deleted_count > 0:
             return jsonify("Successfully deleted")
@@ -170,7 +139,6 @@ def read(audioFileType, id):
 
 @ app.route('/readAll/<audioFileType>/', methods=['GET'])
 def readAll(audioFileType):
-    # audioFileType = 1
     if int(audioFileType) == int(0):
         result = db['Songs'].find()
         data = []
